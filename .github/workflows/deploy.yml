@@ -17,6 +17,12 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v3
 
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1.1.2
+        with:
+          # The Deno version to install. Can be a semver version of a stable release, "canary" for the latest canary, or the Git hash of a specific canary release.
+          deno-version: 1.31.3
+
       - name: Build step
         run: deno task build # 📝 Update the build command(s)
 
