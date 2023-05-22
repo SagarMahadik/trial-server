@@ -46,15 +46,6 @@ jobs:
             "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"]
           }' > tsconfig.json
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Replace Deno import paths
-        run: sed -i 's#https://deno.land/x/zod@v3.21.4/mod.ts#zod#g' src/types/index.ts
-
-      - name: Build
-        run: npx tsc
-
       - name: Create package.json
         run: |
           echo '{
@@ -66,6 +57,15 @@ jobs:
               "zod": "^3.21.4"
             }
           }' > package.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Replace Deno import paths
+        run: sed -i 's#https://deno.land/x/zod@v3.21.4/mod.ts#zod#g' src/types/index.ts
+
+      - name: Build
+        run: npx tsc
 
       - name: Publish
         run: npm publish
