@@ -55,7 +55,7 @@ jobs:
             "types": "dist/index.d.ts",
             "peerDependencies": {
               "zod": "^3.21.4"
-            }
+            },
             "devDependencies": {
               "zod": "^3.21.4"
             }
