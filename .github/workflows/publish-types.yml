@@ -49,7 +49,7 @@ jobs:
       - name: Create package.json
         run: |
           echo '{
-            "name": "@bennyui/core-nx-monorepo",
+            "name": "@bennyui/quotes-types",
             "version": "1.0.0",
             "main": "dist/index.js",
             "types": "dist/index.d.ts",
@@ -76,6 +76,6 @@ jobs:
         run: npx tsc
 
       - name: Publish
-        run: npm publish --access public
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
