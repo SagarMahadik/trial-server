@@ -76,7 +76,7 @@ jobs:
         run: npx tsc
 
       - name: Publish
-        run: yarn publish
+        run: yarn publish --access public --non-interactive --no-git-tag-version
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - name: Upload npm logs
