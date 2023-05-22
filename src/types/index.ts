@@ -9,5 +9,10 @@ export const tagsSchema = z.object({
 	tags: z.array(z.string()),
 });
 
+export const booksSchema = z.object({
+	books: z.array(z.string()),
+});
+
+export type Books = z.infer<typeof booksSchema>;
 export type Tags = z.infer<typeof tagsSchema>;
 export type Quote = z.infer<typeof quoteSchema>;
