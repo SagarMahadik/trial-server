@@ -75,13 +75,10 @@ jobs:
       - name: Build
         run: npx tsc
 
-      - name: Publish
-        run: yarn publish --access public --non-interactive --no-git-tag-version
+      - name: Setup .npmrc file
+        run: echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      - name: Upload npm logs
-        if: failure() # Only runs this step if previous step fails
-        uses: actions/upload-artifact@v2
-        with:
-          name: npm-debug-logs
-          path: /home/runner/.npm/_logs/*-debug.log
+
+      - name: Publish
+        run: yarn publish --access public --non-interactive --no-git-tag-version
