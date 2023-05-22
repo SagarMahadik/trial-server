@@ -13,6 +13,12 @@ export const booksSchema = z.object({
 	books: z.array(z.string()),
 });
 
+export const userSchema = z.object({
+	username: z.string(),
+	password: z.string(),
+});
+
+export type User = z.infer<typeof userSchema>;
 export type Books = z.infer<typeof booksSchema>;
 export type Tags = z.infer<typeof tagsSchema>;
 export type Quote = z.infer<typeof quoteSchema>;

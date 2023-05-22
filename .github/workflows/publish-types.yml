@@ -93,6 +93,11 @@ jobs:
       - name: Build
         run: npx tsc
 
+      - name: Cleanup
+        run: |
+          shopt -s extglob
+          rm -rf !("dist"|"package.json")
+
       - name: Setup .npmrc file
         run: echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
         env:
