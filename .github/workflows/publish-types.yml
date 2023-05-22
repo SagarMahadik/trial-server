@@ -1,0 +1,73 @@
+name: Publish Types Package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Create tsconfig.json
+        run: |
+          echo '{
+            "compilerOptions": {
+              "target": "ESNext",
+              "module": "CommonJS",
+              "strict": true,
+              "noImplicitAny": true,
+              "strictNullChecks": true,
+              "strictFunctionTypes": true,
+              "strictBindCallApply": true,
+              "strictPropertyInitialization": true,
+              "noImplicitThis": true,
+              "alwaysStrict": true,
+              "noUnusedLocals": true,
+              "noUnusedParameters": true,
+              "noImplicitReturns": true,
+              "noFallthroughCasesInSwitch": true,
+              "moduleResolution": "node",
+              "baseUrl": ".",
+              "outDir": "dist",
+              "declaration": true,
+              "esModuleInterop": true
+            },
+            "include": ["src/types"],
+            "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"]
+          }' > tsconfig.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Replace Deno import paths
+        run: sed -i 's#https://deno.land/x/zod@v3.21.4/mod.ts#zod#g' src/types/index.ts
+
+      - name: Build
+        run: npx tsc
+
+      - name: Create package.json
+        run: |
+          echo '{
+            "name": "quotes-types",
+            "version": "1.0.0",
+            "main": "dist/index.js",
+            "types": "dist/index.d.ts",
+            "peerDependencies": {
+              "zod": "^3.21.4"
+            }
+          }' > package.json
+
+      - name: Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
