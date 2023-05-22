@@ -60,6 +60,7 @@ jobs:
               "zod": "^3.21.4"
             },
             "license": "MIT",
+            "private": false,
             "publishConfig": {
               "access": "public"
             }
