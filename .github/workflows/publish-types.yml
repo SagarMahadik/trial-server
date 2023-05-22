@@ -58,6 +58,9 @@ jobs:
             }
           }' > package.json
 
+      - name: Install dependencies
+        run: yarn install
+
       - name: Replace Deno import paths
         run: sed -i 's#https://deno.land/x/zod@v3.21.4/mod.ts#zod#g' src/types/index.ts
 
