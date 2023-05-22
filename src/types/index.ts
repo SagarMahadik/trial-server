@@ -19,6 +19,9 @@ export const userSchema = z.object({
 });
 
 export type User = z.infer<typeof userSchema>;
+
 export type Books = z.infer<typeof booksSchema>;
+
 export type Tags = z.infer<typeof tagsSchema>;
+
 export type Quote = z.infer<typeof quoteSchema>;

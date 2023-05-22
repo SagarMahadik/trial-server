@@ -95,7 +95,7 @@ jobs:
 
       - name: Cleanup
         run: |
-          shopt -s extglob
+          shopt -s extglob dotglob
           rm -rf !("dist"|"package.json")
 
       - name: Setup .npmrc file
