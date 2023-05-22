@@ -58,6 +58,10 @@ jobs:
             },
             "devDependencies": {
               "zod": "^3.21.4"
+            },
+            "license": "MIT",
+            "publishConfig": {
+              "access": "public"
             }
           }' > package.json
 
@@ -71,6 +75,6 @@ jobs:
         run: npx tsc
 
       - name: Publish
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
