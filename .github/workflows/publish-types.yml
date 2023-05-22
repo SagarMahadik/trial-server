@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "src/types/**"
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   build-and-publish:
@@ -17,6 +23,18 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "14"
+
+      - name: Get current version
+        id: get_version
+        run: |
+          LATEST_VERSION=$(npm view @bennyui/quotes-types version)
+          VERSION_BITS=(${LATEST_VERSION//./ })
+          V_MAJOR=${VERSION_BITS[0]}
+          V_MINOR=${VERSION_BITS[1]}
+          V_PATCH=${VERSION_BITS[2]}
+          V_PATCH=$((V_PATCH + 1))
+          NEW_VERSION="$V_MAJOR.$V_MINOR.$V_PATCH"
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Create tsconfig.json
         run: |
@@ -50,7 +68,7 @@ jobs:
         run: |
           echo '{
             "name": "@bennyui/quotes-types",
-            "version": "1.0.0",
+           "version": "'$NEW_VERSION'",
             "main": "dist/index.js",
             "types": "dist/index.d.ts",
             "peerDependencies": {
